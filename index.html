@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            list-style: none;
+            height: 50px;
+            overflow: auto;
+            box-sizing: border-box;
+
+        }
+        .container li{
+            height: 50px;
+            line-height: 50px;
+            box-sizing: border-box;
+
+        }
+
+    </style>
+</head>
+<body>
+
+
+<ul class="container">
+    <li>1.Lorem ipsum dolor sit.</li>
+    <li>2.Enim hic ipsum sunt.</li>
+    <li>3.Ad architecto earum necessitatibus!</li>
+    <li>4.Atque placeat possimus totam.</li>
+    <li>5.Impedit nemo provident sint.</li>
+    <li>6.Aliquam est iste quia!</li>
+</ul>
+
+<script src="animate.js"></script>
+<script>
+
+    let container = document.querySelector('.container');
+    let li = container.children[0].cloneNode(true);
+    container.appendChild(li);
+    let hegight = 50;
+    let curTop = 0;
+
+    startScroll();
+    function startScroll(){
+         setInterval(()=>{
+             scroll();
+         },2000)
+    }
+    // scroll();
+    /**
+     * 滚动一次
+     */
+    function scroll(){
+        let animate = new myPlugin.Animate({
+            duration:50,
+            total:500,
+            begin:{
+                a: curTop,
+            },
+            end:{
+                a: curTop + hegight,
+            },
+            onStart:function () {
+                console.log('star')
+            },
+            onMove:function(data){
+                curTop =  this.curData.a
+                container.scrollTop = curTop
+            },
+            onOver:function(data){
+                if(curTop == container.scrollHeight - hegight){
+                    container.scrollTop = 0;
+                    curTop = 0;
+
+                }
+                console.log( curTop , container.scrollHeight,hegight)
+            }
+        })
+        animate.start()
+    }
+
+
+
+</script>
+</body>
+</html>
